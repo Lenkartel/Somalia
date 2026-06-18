@@ -265,7 +265,7 @@ function validate(){
   const ln=document.getElementById("lastName").value.trim();
   const ph=document.getElementById("phone").value.trim();
   if(!fn||!ln||!ph){toast("Fadlan buuxi dhammaan goobaha");return null}
-  if(ph.length!==8){toast("Telefoonku waa inuu noqdaa 9 nambar");return null}
+  if(ph.length!==9){toast("Telefoonku waa inuu noqdaa 9 nambar");return null}
   const interest=loanAmt*RATE*loanDur,total=loanAmt+interest,mo=(total/loanDur).toFixed(2);
   return{firstName:fn,lastName:ln,phone:"+252"+ph,monthly:mo,totalRepay:total.toFixed(2)};
 }
