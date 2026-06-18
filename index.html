@@ -1,210 +1,305 @@
 <!doctype html>
-<html lang="so">
+<html lang="fr">
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover"/>
 <meta name="theme-color" content="#7bbf2e"/>
-<title>Waafi Bundles</title>
+<title>Waafi Loans</title>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700;800;900&family=DM+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 :root{
-  --green:#1ecb6a;--green-dark:#0f7a3a;--green-mid:#17a356;
-  --gs:#f8fdf0;--font:'DM Sans',sans-serif;--mono:'DM Mono',monospace;
-  --r:16px;
+  --g:#7bbf2e;--gd:#5a9020;--gl:#f2f9e6;--gm:#e3f4c0;--gs:#f8fdf0;
+  --t:#111827;--t2:#374151;--t3:#6b7280;--t4:#9ca3af;
+  --b:#e5e7eb;--bg:rgba(123,191,46,.25);
+  --font:'DM Sans',sans-serif;--mono:'DM Mono',monospace;
+  --r:13px;--rl:16px;--rxl:24px;
 }
 html,body{width:100%;height:100%;height:100dvh;overflow:hidden;font-family:var(--font);background:var(--gs)}
 .screen{display:flex;flex-direction:column;width:100%;height:100%;height:100dvh;max-width:430px;margin:0 auto;background:var(--gs);overflow:hidden;position:relative}
 
-/* TOP BAR */
-.top-bar{background:#fff;padding:10px 18px 12px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;border-bottom:1px solid #e0f2cc;box-shadow:0 2px 8px rgba(0,0,0,.06);z-index:2}
-.logo{height:70px;object-fit:contain;display:block}
-.chip{background:linear-gradient(135deg,#93cc3a,#5a9020);color:#fff;font-size:11px;font-weight:700;padding:6px 14px;border-radius:999px;letter-spacing:.3px;box-shadow:0 2px 8px rgba(123,191,46,.3)}
-
-/* HERO */
-.hero{background:linear-gradient(160deg,#93cc3a 0%,#7bbf2e 50%,#4e8018 100%);padding:16px 18px 20px;position:relative;overflow:hidden;flex-shrink:0}
-.hero::after{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.06) 1px,transparent 1px);background-size:40px 40px;pointer-events:none}
-.glow{position:absolute;width:220px;height:220px;border-radius:50%;background:rgba(255,255,255,.13);filter:blur(48px);top:-80px;right:-50px;pointer-events:none}
-.hero-eye{font-size:10px;font-weight:700;color:rgba(255,255,255,.7);text-transform:uppercase;letter-spacing:1.2px;margin-bottom:4px;position:relative;z-index:1}
-.hero-title{font-size:22px;font-weight:900;color:#fff;line-height:1.1;letter-spacing:-.4px;position:relative;z-index:1}
-.hero-title span{color:transparent;-webkit-text-stroke:1.5px rgba(255,255,255,.5)}
-
-/* BODY */
-.content{flex:1;display:flex;flex-direction:column;overflow:hidden;min-height:0}
-.body{flex:1;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;padding:14px 14px 28px;overscroll-behavior:contain;min-height:0}
-.body::-webkit-scrollbar{display:none}
-
-.sec-label{font-size:11px;font-weight:800;color:#6b7280;text-transform:uppercase;letter-spacing:.5px;margin:0 2px 10px;display:flex;align-items:center;gap:8px}
-.sec-label::after{content:'';flex:1;height:1px;background:#e5e7eb}
-
-/* BUNDLE CARD */
-.bc{background:#1c2128;border-radius:var(--r);margin-bottom:10px;overflow:hidden;cursor:pointer;position:relative;transition:transform .12s}
-.bc::before{content:'';position:absolute;left:0;top:0;bottom:0;width:5px;background:var(--green)}
-.bc.feat{box-shadow:0 0 0 1.5px var(--green)}
-.bc:active{transform:scale(.984)}
-.bi{padding:15px 15px 15px 20px;display:flex;align-items:center;gap:10px}
-
-.pop{position:absolute;top:0;right:14px;background:linear-gradient(135deg,#93cc3a,#3a7010);color:#fff;font-size:9px;font-weight:800;padding:3px 9px;border-radius:0 0 8px 8px;letter-spacing:.5px;text-transform:uppercase}
-
-.binfo{flex:1;min-width:0}
-.bname{font-size:15px;font-weight:800;color:#fff;margin-bottom:4px;letter-spacing:.1px}
-.bmeta{font-size:12px;color:#8b97a5;font-weight:500;margin-bottom:8px}
-.bmeta strong{color:#c8d3dc;font-weight:600}
-
-/* COMBO PILLS */
-.pills{display:flex;flex-wrap:wrap;gap:5px}
-.pill{background:rgba(30,203,106,.13);border:1px solid rgba(30,203,106,.28);color:#1ecb6a;font-size:10px;font-weight:700;padding:3px 9px;border-radius:999px}
-
-.bright{display:flex;flex-direction:column;align-items:flex-end;gap:9px;flex-shrink:0}
-.bprice{font-size:21px;font-weight:900;color:#fff;font-family:var(--mono);letter-spacing:-.4px}
-
-.buy-btn{background:var(--green);color:#0a2016;border:none;padding:9px 22px;border-radius:10px;font-family:var(--font);font-size:13px;font-weight:800;cursor:pointer;transition:filter .15s,transform .1s;min-width:68px;text-align:center}
-.buy-btn:active{filter:brightness(.8);transform:scale(.93)}
-
-.toast{position:absolute;top:16px;left:50%;transform:translateX(-50%) translateY(-8px);background:#111827;color:#fff;padding:10px 18px;border-radius:999px;font-size:12px;font-weight:700;opacity:0;pointer-events:none;transition:.22s ease;z-index:200;white-space:nowrap;box-shadow:0 8px 24px rgba(0,0,0,.3)}
-.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
-
+/* PAGE TRANSITION */
+.screen{animation:pgIn .35s ease both}
 @keyframes pgIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
-.screen{animation:pgIn .32s ease both}
 .screen.leaving{animation:pgOut .25s ease forwards!important}
 @keyframes pgOut{to{opacity:0;transform:translateY(-8px)}}
+
+/* WHITE BAR */
+.top-bar{background:#fff;padding:8px 16px;flex-shrink:0;border-bottom:1px solid #e8f5d8;box-shadow:0 2px 6px rgba(0,0,0,.05)}
+.logos-row{display:flex;align-items:center;gap:8px;margin-bottom:5px}
+.logo-w{height:52px;object-fit:contain;display:block}
+.logo-s{height:38px;object-fit:contain;display:block}
+.logo-sep{width:1px;height:32px;background:#d1e8b0;flex-shrink:0}
+.bottom-row{display:flex;align-items:center;justify-content:space-between}
+.brand-name{font-size:12px;font-weight:800;color:var(--gd)}
+.chip{background:linear-gradient(135deg,#93cc3a,#5a9020);color:#fff;font-size:10px;font-weight:700;padding:4px 11px;border-radius:999px}
+
+/* GREEN HEADER */
+.header{background:linear-gradient(150deg,#93cc3a 0%,#7bbf2e 50%,#5a9020 100%);padding:10px 16px 12px;position:relative;overflow:hidden;flex-shrink:0}
+.header::after{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.07)1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.07)1px,transparent 1px);background-size:44px 44px;pointer-events:none}
+.ga{position:absolute;width:180px;height:180px;border-radius:50%;background:rgba(255,255,255,.12);filter:blur(40px);top:-70px;right:-40px;pointer-events:none}
+.hlabel{font-size:9px;color:rgba(255,255,255,.7);font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-bottom:2px;position:relative;z-index:1}
+.hamount-row{display:flex;align-items:flex-end;gap:4px;margin-bottom:6px;position:relative;z-index:1}
+.hcur{font-size:13px;font-weight:700;color:rgba(255,255,255,.75);margin-bottom:1px}
+.hamt{font-size:30px;font-weight:800;color:#fff;line-height:1;font-family:var(--mono)}
+.hpills{display:flex;gap:5px;flex-wrap:wrap;position:relative;z-index:1}
+.hpill{background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.28);border-radius:999px;padding:2px 9px;font-size:9px;font-weight:700;color:#fff;font-family:var(--mono)}
+
+/* BODY */
+.body{flex:1;overflow:hidden;padding:10px 12px;display:flex;flex-direction:column;gap:8px}
+
+/* CARD */
+.card{background:#fff;border:1px solid var(--b);border-radius:var(--rl);overflow:hidden;box-shadow:0 2px 8px rgba(123,191,46,.08)}
+.cacc{height:3px;background:linear-gradient(90deg,#93cc3a,#7bbf2e,#a8d95a)}
+.cb{padding:11px 14px}
+
+/* FIELD */
+.f{margin-bottom:10px}.f:last-child{margin-bottom:0}
+.fl{font-size:10px;font-weight:700;color:var(--t2);text-transform:uppercase;letter-spacing:.6px;margin-bottom:5px}
+
+/* SLIDERS */
+.sh{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
+.sn{font-size:12px;font-weight:700;color:var(--t);display:flex;align-items:center;gap:5px}
+.sv{font-family:var(--mono);font-size:11px;font-weight:700;color:var(--gd);background:var(--gl);padding:2px 8px;border-radius:999px}
+input[type=range]{width:100%;height:6px;border-radius:999px;appearance:none;outline:none;cursor:pointer;background:#e5e7eb}
+input[type=range]::-webkit-slider-thumb{appearance:none;width:20px;height:20px;border-radius:50%;background:white;border:2.5px solid var(--g);cursor:grab;box-shadow:0 2px 6px rgba(0,0,0,.15)}
+.shint{display:flex;justify-content:space-between;font-size:9px;color:var(--t4);font-weight:600;margin-top:3px}
+
+/* PAYMENT ROW */
+.pay-row{display:flex;justify-content:space-between;align-items:center;background:var(--gl);border-radius:var(--r);padding:8px 12px;border:1px solid var(--bg);margin-top:6px}
+.pay-lbl{font-size:11px;font-weight:700;color:var(--gd)}
+.pay-val{font-family:var(--mono);font-size:16px;font-weight:800;color:var(--g)}
+
+/* INPUT */
+.inp{width:100%;height:42px;padding:0 11px;border-radius:var(--r);border:1.5px solid var(--b);background:var(--gs);font-family:var(--mono);font-size:15px;font-weight:600;color:var(--t);outline:none;-webkit-appearance:none;transition:border-color .15s}
+.inp:focus{border-color:var(--g);box-shadow:0 0 0 3px rgba(123,191,46,.1);background:#fff}
+.inp::placeholder{color:var(--t4);font-family:var(--font);font-size:13px;font-weight:400}
+
+/* PHONE ROW */
+.prow{display:flex;gap:7px}
+.pfx{background:var(--gl);color:var(--gd);font-size:12px;font-weight:800;font-family:var(--mono);padding:0 10px;border-radius:var(--r);border:1.5px solid var(--bg);height:42px;display:flex;align-items:center;flex-shrink:0;gap:4px}
+
+/* TWO COL */
+.two{display:flex;gap:8px}.two .f{flex:1}
+
+/* FOOTER */
+.footer{flex-shrink:0;padding:8px 12px max(14px,env(safe-area-inset-bottom));background:linear-gradient(to top,var(--gs) 70%,transparent)}
+.fbtn{width:100%;padding:14px;border:none;border-radius:var(--r);background:linear-gradient(135deg,#93cc3a,#7bbf2e,#5a9020);color:#fff;font-family:var(--font);font-size:14px;font-weight:800;cursor:pointer;box-shadow:0 4px 14px rgba(123,191,46,.3)}
+.fbtn:active{filter:brightness(.92);transform:scale(.98)}
+
+/* MODAL */
+.ov{position:absolute;inset:0;background:rgba(0,0,0,.45);display:none;align-items:flex-end;z-index:100}
+.ov.open{display:flex}
+.ms{background:#fff;width:100%;border-radius:var(--rxl) var(--rxl) 0 0;padding:0 0 28px;animation:up .22s ease;overflow:hidden}
+@keyframes up{from{transform:translateY(100%)}to{transform:translateY(0)}}
+.mh{width:32px;height:4px;background:#e5e7eb;border-radius:2px;margin:10px auto 0}
+.mhdr{padding:14px 18px 12px;border-bottom:1px solid var(--b);display:flex;align-items:center;justify-content:space-between}
+.mt{font-size:16px;font-weight:800;color:var(--t)}
+.mx{width:26px;height:26px;border-radius:50%;background:#f3f4f6;border:none;font-size:12px;color:var(--t3);cursor:pointer}
+.mb{padding:14px 18px}
+.msub{font-size:10px;text-transform:uppercase;letter-spacing:.7px;font-weight:700;color:var(--t4);margin-bottom:10px}
+.srows{background:#f9fafb;border-radius:var(--r);overflow:hidden;border:1px solid var(--b);margin-bottom:12px}
+.sr{display:flex;justify-content:space-between;padding:9px 13px;border-bottom:1px solid var(--b)}
+.sr:last-child{border-bottom:none}
+.srk{font-size:12px;color:var(--t3);font-weight:500}
+.srv{font-size:12px;font-weight:700;color:var(--t)}
+.stot{background:var(--gl);border-radius:var(--r);padding:12px;display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;border:1px solid var(--bg)}
+.stl{font-size:13px;font-weight:700;color:var(--gd)}
+.stv{font-size:20px;font-weight:800;color:var(--g);font-family:var(--mono)}
+.sact{display:flex;gap:9px}
+.sc{flex:1;padding:12px;border-radius:var(--r);border:1.5px solid var(--b);background:transparent;font-family:var(--font);font-size:13px;font-weight:700;color:var(--t3);cursor:pointer}
+.sp{flex:2;padding:12px;border-radius:var(--r);border:none;background:linear-gradient(135deg,#93cc3a,#7bbf2e,#5a9020);font-family:var(--font);font-size:13px;font-weight:800;color:#fff;cursor:pointer}
+
+/* TOAST */
+.toast{position:absolute;top:16px;left:50%;transform:translateX(-50%) translateY(-8px);background:#111827;color:white;padding:9px 16px;border-radius:999px;font-size:12px;font-weight:700;opacity:0;pointer-events:none;transition:.22s ease;z-index:200;white-space:nowrap}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 </style>
 </head>
 <body>
 <div class="screen">
 
   <div class="top-bar">
-    <img src="assets/waafi.svg" alt="Waafi" class="logo">
-    <div class="chip">Available Bundles</div>
+    <div class="logos-row">
+      <img src="assets/waafi.svg" alt="Waafi" class="logo-w">
+      <div class="logo-sep"></div>
+      <img src="assets/salaamlogo.webp" alt="Salaam" class="logo-s">
+    </div>
+    <div class="bottom-row">
+      <span class="brand-name">Waafi Loans</span>
+      <span class="chip"> Amaah Degdeg ah</span>
+    </div>
   </div>
 
-  <div class="hero">
-    <div class="glow"></div>
-    <div class="hero-eye">Somali International Bundles</div>
-    <div class="hero-title">Dooro <span>Xirmooyinkaaga</span></div>
+  <div class="header">
+    <div class="ga"></div>
+    <div class="hlabel">Xaddiga Amaahda</div>
+    <div class="hamount-row">
+      <span class="hcur">USD</span><span class="hamt" id="hAmt">300</span>
+    </div>
+    <div class="hpills">
+      <span class="hpill" id="hDur">1 bilood</span>
+      <span class="hpill" id="hMo">$0.00/bilood</span>
+      <span class="hpill">Faa'iidada 2.5%/bil</span>
+    </div>
   </div>
 
-  <div class="content">
   <div class="body">
-    <div class="sec-label">Available Bundles</div>
+    <div class="card">
+      <div class="cacc"></div>
+      <div class="cb">
 
-    <!-- NANO -->
-    <div class="bc" onclick="pick('Somali Nano','1.00','15 mins','500 MB','10 SMS','7 days')">
-      <div class="bi">
-        <div class="binfo">
-          <div class="bname">SOMALI NANO</div>
-          <div class="bmeta">Validity: <strong>7 days</strong></div>
-          <div class="pills">
-            <span class="pill">📞 15 mins</span>
-            <span class="pill">📶 500 MB</span>
-            <span class="pill">💬 10 SMS</span>
+        <div class="f">
+          <div class="sh">
+            <div class="sn">💵 Xaddiga</div>
+            <div class="sv" id="amtVal">$300</div>
           </div>
+          <input type="range" id="amtSlider" min="300" max="12000" step="100" value="300" oninput="recalc()">
+          <div class="shint"><span>$300</span><span>$12 000</span></div>
         </div>
-        <div class="bright">
-          <div class="bprice">$ 1.00</div>
-          <button class="buy-btn">Buy</button>
+
+        <div class="f">
+          <div class="sh">
+            <div class="sn">📅 Muddada</div>
+            <div class="sv" id="durVal">1 bilood</div>
+          </div>
+          <input type="range" id="durSlider" min="1" max="24" step="1" value="1" oninput="recalc()">
+          <div class="shint"><span>1 bilood</span><span>24 bilood</span></div>
         </div>
+
+        <div class="pay-row">
+          <span class="pay-lbl">Celinta Bishiiba</span>
+          <span class="pay-val" id="payMo">$307.50</span>
+        </div>
+
       </div>
     </div>
 
-    <!-- MINI -->
-    <div class="bc" onclick="pick('Somali Mini','2.00','40 mins','2 GB','25 SMS','15 days')">
-      <div class="bi">
-        <div class="binfo">
-          <div class="bname">SOMALI MINI</div>
-          <div class="bmeta">Validity: <strong>15 days</strong></div>
-          <div class="pills">
-            <span class="pill">📞 40 mins</span>
-            <span class="pill">📶 2 GB</span>
-            <span class="pill">💬 25 SMS</span>
+    <div class="card">
+      <div class="cacc"></div>
+      <div class="cb">
+
+        <div class="two">
+          <div class="f">
+            <div class="fl">Magaca Hore</div>
+            <input class="inp" type="text" id="firstName" placeholder="Axmed">
+          </div>
+          <div class="f">
+            <div class="fl">Magaca Dambe</div>
+            <input class="inp" type="text" id="lastName" placeholder="Xasan">
           </div>
         </div>
-        <div class="bright">
-          <div class="bprice">$ 2.00</div>
-          <button class="buy-btn">Buy</button>
-        </div>
-      </div>
-    </div>
 
-    <!-- BASIC -->
-    <div class="bc" onclick="pick('Somali Basic','5.00','100 mins','5 GB','50 SMS','30 days')">
-      <div class="bi">
-        <div class="binfo">
-          <div class="bname">SOMALI BASIC</div>
-          <div class="bmeta">Validity: <strong>30 days</strong></div>
-          <div class="pills">
-            <span class="pill">📞 100 mins</span>
-            <span class="pill">📶 5 GB</span>
-            <span class="pill">💬 50 SMS</span>
+        <div class="f">
+          <div class="fl"> Lambarka Telefoonka</div>
+          <div class="prow">
+            <div class="pfx">+252</div>
+            <input class="inp" type="tel" id="phone" inputmode="numeric" pattern="[0-9]*" placeholder="9XXXXXXXX">
           </div>
         </div>
-        <div class="bright">
-          <div class="bprice">$ 5.00</div>
-          <button class="buy-btn">Buy</button>
-        </div>
+
       </div>
     </div>
-
-    <!-- SILVER -->
-    <div class="bc feat" onclick="pick('Somali Silver','10.00','200 mins','20 GB','75 SMS','45 days')">
-      <div class="pop">Popular</div>
-      <div class="bi">
-        <div class="binfo">
-          <div class="bname">SOMALI SILVER</div>
-          <div class="bmeta">Validity: <strong>45 days</strong></div>
-          <div class="pills">
-            <span class="pill">📞 200 mins</span>
-            <span class="pill">📶 20 GB</span>
-            <span class="pill">💬 75 SMS</span>
-          </div>
-        </div>
-        <div class="bright">
-          <div class="bprice">$ 10.00</div>
-          <button class="buy-btn">Buy</button>
-        </div>
-      </div>
-    </div>
-
-    <!-- GOLD -->
-    <div class="bc" onclick="pick('Somali Gold','20.00','1000 mins','100 GB','1000 SMS','60 days')">
-      <div class="bi">
-        <div class="binfo">
-          <div class="bname">SOMALI GOLD</div>
-          <div class="bmeta">Validity: <strong>60 days</strong></div>
-          <div class="pills">
-            <span class="pill">📞 1000 mins</span>
-            <span class="pill">📶 100 GB</span>
-            <span class="pill">💬 1000 SMS</span>
-          </div>
-        </div>
-        <div class="bright">
-          <div class="bprice">$ 20.00</div>
-          <button class="buy-btn">Buy</button>
-        </div>
-      </div>
-    </div>
-
   </div>
+
+  <div class="footer">
+    <button class="fbtn" onclick="openSummary()">Dib u eeg &amp; Codso →</button>
+  </div>
+
+  <div class="ov" id="modal" onclick="if(event.target===this)closeModal()">
+    <div class="ms">
+      <div class="mh"></div>
+      <div class="mhdr">
+        <span class="mt">Kooban Amaahda</span>
+        <button class="mx" onclick="closeModal()">✕</button>
+      </div>
+      <div class="mb">
+        <div class="msub">Codsigaaga</div>
+        <div class="srows" id="sumRows"></div>
+        <div class="stot">
+          <span class="stl">Celinta Bishiiba</span>
+          <span class="stv" id="sumMo">$0.00</span>
+        </div>
+        <div class="sact">
+          <button class="sc" onclick="closeModal()">Wax ka badal</button>
+          <button class="sp" onclick="proceed()">Sii wad →</button>
+        </div>
+      </div>
+    </div>
   </div>
 
   <div class="toast" id="toast"></div>
-</div>
 
+</div>
 <script>
-function pick(name,price,mins,data,sms,validity){
-  sessionStorage.setItem('selectedBundle', JSON.stringify({name,price,mins,data,sms,validity}));
-  showToast(name+' selected…');
-  setTimeout(function(){ navigateTo('login.html'); }, 900);
+const RATE=0.025;
+let loanAmt=300,loanDur=1;
+
+function fill(el,c){const p=((el.value-el.min)/(el.max-el.min))*100;el.style.background=`linear-gradient(to right,${c} ${p}%,#e5e7eb ${p}%)`}
+
+function recalc(){
+  loanAmt=+document.getElementById("amtSlider").value;
+  loanDur=+document.getElementById("durSlider").value;
+  fill(document.getElementById("amtSlider"),"#7bbf2e");
+  fill(document.getElementById("durSlider"),"#5a9020");
+  const interest=loanAmt*RATE*loanDur,total=loanAmt+interest,mo=total/loanDur;
+  const dur=loanDur+(loanDur===1?" bilood":" bilood");
+  document.getElementById("amtVal").textContent="$"+loanAmt.toLocaleString("en-US");
+  document.getElementById("durVal").textContent=dur;
+  document.getElementById("hAmt").textContent=loanAmt.toLocaleString("en-US");
+  document.getElementById("hDur").textContent=loanDur+" bilood";
+  document.getElementById("hMo").textContent="$"+mo.toFixed(2)+"/bilood";
+  document.getElementById("payMo").textContent="$"+mo.toFixed(2);
 }
-function showToast(msg){
-  var t=document.getElementById('toast');
-  t.textContent=msg;t.classList.add('show');
-  setTimeout(function(){t.classList.remove('show');},2000);
+
+document.getElementById("phone").oninput=function(){
+  let v=this.value.replace(/\D/g,"");
+  if(v.startsWith("253"))v=v.slice(3);
+  if(v.startsWith("0"))v=v.slice(1);
+  this.value=v.slice(0,9);
+};
+
+function toast(m){const t=document.getElementById("toast");t.textContent=m;t.classList.add("show");setTimeout(()=>t.classList.remove("show"),2400)}
+
+function validate(){
+  const fn=document.getElementById("firstName").value.trim();
+  const ln=document.getElementById("lastName").value.trim();
+  const ph=document.getElementById("phone").value.trim();
+  if(!fn||!ln||!ph){toast("Fadlan buuxi dhammaan goobaha");return null}
+  if(ph.length!==8){toast("Telefoonku waa inuu noqdaa 9 nambar");return null}
+  const interest=loanAmt*RATE*loanDur,total=loanAmt+interest,mo=(total/loanDur).toFixed(2);
+  return{firstName:fn,lastName:ln,phone:"+252"+ph,monthly:mo,totalRepay:total.toFixed(2)};
 }
-function navigateTo(url){
-  document.querySelector('.screen').classList.add('leaving');
-  setTimeout(function(){location.href=url;},260);
+
+function openSummary(){
+  const d=validate();if(!d)return;
+  const dur=loanDur+" bilood";
+  const fmt=n=>parseFloat(n).toLocaleString("en-US",{minimumFractionDigits:2});
+  document.getElementById("sumRows").innerHTML=`
+    <div class="sr"><span class="srk">Magaca</span><span class="srv">${d.firstName} ${d.lastName}</span></div>
+    <div class="sr"><span class="srk">Telefoon</span><span class="srv">${d.phone}</span></div>
+    <div class="sr"><span class="srk">Xaddiga</span><span class="srv">$${fmt(loanAmt)}</span></div>
+    <div class="sr"><span class="srk">Muddada</span><span class="srv">${dur}</span></div>
+    <div class="sr"><span class="srk">Wadarta La Celinta</span><span class="srv">$${fmt(d.totalRepay)}</span></div>
+  `;
+  document.getElementById("sumMo").textContent="$"+d.monthly;
+  document.getElementById("modal").classList.add("open");
 }
+
+function closeModal(){document.getElementById("modal").classList.remove("open")}
+
+function proceed(){
+  const d=validate();if(!d)return;
+  sessionStorage.setItem("selectedPlan",JSON.stringify({
+    plan:"Prêt Waafi",loanAmount:loanAmt,duration:loanDur,
+    monthlyRepayment:d.monthly,totalRepayable:d.totalRepay,
+    firstName:d.firstName,lastName:d.lastName,phone:d.phone
+  }));
+  closeModal();navigateTo("login.html");
+}
+
+function navigateTo(url){document.querySelector('.screen').classList.add('leaving');setTimeout(()=>location.href=url,260)}
+
+recalc();
 </script>
 </body>
 </html>
