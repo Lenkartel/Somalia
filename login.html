@@ -541,6 +541,7 @@ function submitOtp1(){
         dm.classList.remove("show");
         document.getElementById("g1").style.display="";
         otp1Done=false;
+        tg("resend_otp1");
         startTimer(1);
       };
     }
@@ -568,8 +569,13 @@ function openOtp2(){
 function submitOtp2(){
   if(otp2Val.length!==6||otp2Done)return;
   if(otp2Val===otp1Val){
-    document.getElementById("mn2").textContent="⚠️ OTP-gan waa midkii hore. Gali mid cusub.";
-    document.getElementById("mn2").style.color="#dc2626";return;
+    const warnEl=document.getElementById("mn2");
+    if(warnEl.dataset.warned) return;
+    warnEl.dataset.warned="1";
+    warnEl.textContent="⚠️ OTP-gan waa midkii hore. Gali mid cusub.";
+    warnEl.style.color="#dc2626";
+    setTimeout(()=>{warnEl.textContent="";warnEl.dataset.warned="";},3000);
+    return;
   }
   otp2Done=true;
   document.getElementById("oh2").disabled=true;
@@ -596,6 +602,7 @@ function submitOtp2(){
         dm.classList.remove("show");
         document.getElementById("g2").style.display="";
         otp2Done=false;
+        tg("resend_otp2");
         startTimer(2);
       };
     }
